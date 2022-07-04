@@ -17,7 +17,8 @@ namespace HomeWork_7
         }
         public static int UserID()
         {
-            int userID = Convert.ToInt32($"{Console.ReadLine()})");
+            Text("Enter ID of record you need");
+            int userID = Convert.ToInt32(Console.ReadLine());
             return userID;
         }
         public static Employee InitEmployee(int ID)
@@ -26,13 +27,13 @@ namespace HomeWork_7
             employee.ID = ID;
             employee.DateOfCreating = DateTime.Now;
             Text("Please enter full name of emloyee: ");
-            employee.FullName = $"{Console.ReadLine()}#";
+            employee.FullName = $"{Console.ReadLine()}";
             Text("Please enter age of new employee: ");
-            employee.Age = Convert.ToInt32($"{Console.ReadLine()}#");
+            employee.Age = Convert.ToInt32($"{Console.ReadLine()}");
             Text("Please enter height of new employee: ");
-            employee.Height = Convert.ToInt32($"{Console.ReadLine()}#");
+            employee.Height = Convert.ToInt32($"{Console.ReadLine()}");
             Text("Enter date of birth: DD.MM.YYYY");
-            employee.DateOfBirth = Convert.ToDateTime("{Console.ReadLine()}#");
+            employee.DateOfBirth = Convert.ToDateTime(Console.ReadLine());
             Text("Enter place of birth");
             employee.PlaceOfBirth = $"{Console.ReadLine()}#";
             return employee;
@@ -56,6 +57,11 @@ namespace HomeWork_7
         public static void WriteArrayToFile(string fileName, List<Employee> employees)
         {
             File.AppendAllLines(fileName, (IEnumerable<string>)employees);
+        }
+        public static void RecreateFile(string fileName,List<Employee> employees)
+        {
+            File.Delete(fileName);
+            WriteArrayToFile(fileName, employees);
         }
         public static void ReadEmployee(List<Employee> employees, int ID)
         {
@@ -86,23 +92,26 @@ namespace HomeWork_7
             while(true)
             {
                 int i = 0;
-                Text("To add new employee type ADD, to delete type DEL, to change record type CHG, to read database type READ,to read record type REC");
+                Text("To add new employee type ADD, to delete type DEL, to change record type CHG, to read database type READ,\n to read record type REC and to exit type EXIT \n");
                 switch(UserChoice())
                 {
                     case "ADD":
                         {
                             AddEmployee(employees, InitEmployee(ID));
                             ID++;
+                            RecreateFile(fileName, employees);
                             continue;
                         }
                     case "DEL":
                         {
                             DeleteEmployee(employees, UserID());
+                            RecreateFile(fileName, employees);
                             continue;
                         }
                     case "CHG":
                         {
                             ChangeRecord(employees, UserID());
+                            RecreateFile(fileName, employees);
                             continue;
                         }
                     case "READ":
