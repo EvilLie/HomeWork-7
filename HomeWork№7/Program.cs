@@ -35,35 +35,40 @@ namespace HomeWork_7
             Text("Enter date of birth: DD.MM.YYYY");
             employee.DateOfBirth = Convert.ToDateTime(Console.ReadLine());
             Text("Enter place of birth");
-            employee.PlaceOfBirth = $"{Console.ReadLine()}#";
+            employee.PlaceOfBirth = $"{Console.ReadLine()}";
             return employee;
         }
-        public static List<Employee> AddEmployee(List<Employee> employees,Employee employee)
+        public static string ConvertEmployee(Employee employee)
         {
-            employees.Add(employee);
+            string s = $"{employee.ID}#{employee.DateOfCreating}#{employee.FullName}#{employee.Age}#{employee.Height}#{employee.DateOfBirth}#{employee.PlaceOfBirth}#";
+            return s;
+        }
+        public static List<string> AddEmployee(List<string> employees, Employee employee)
+        {
+            employees.Add(ConvertEmployee(employee));
             return employees;
         }
-        public static List<Employee> DeleteEmployee(List<Employee> employees,int ID)
+        public static List<string> DeleteEmployee(List<string> employees, int ID)
         {
-            employees.RemoveAt(ID - 1);            
+            employees.RemoveAt(ID - 1);
             return employees;
         }
-        public static List<Employee> ChangeRecord(List<Employee> employees,int ID)
+        public static List<string> ChangeRecord(List<string> employees, int ID)
         {
             DeleteEmployee(employees, ID);
             AddEmployee(employees, InitEmployee(ID));
             return employees;
         }
-        public static void WriteArrayToFile(string fileName, List<Employee> employees)
+        public static void WriteArrayToFile(string fileName, List<string> employees)
         {
             File.AppendAllLines(fileName, (IEnumerable<string>)employees);
         }
-        public static void RecreateFile(string fileName,List<Employee> employees)
+        public static void RecreateFile(string fileName, List<string> employees)
         {
             File.Delete(fileName);
             WriteArrayToFile(fileName, employees);
         }
-        public static void ReadEmployee(List<Employee> employees, int ID)
+        public static void ReadEmployee(List<string> employees, int ID)
         {
             Console.WriteLine(employees[ID - 1]);
         }
@@ -78,21 +83,15 @@ namespace HomeWork_7
                 return new string[0];
             }
         }
-        public static void ReverseReadFromFile(string fileName, List<Employee> employees)
-        {
-            employees.Reverse();
-            WriteArrayToFile(fileName, employees);
-            ReadArrayFromFile(fileName);
-        }
         static void Main(string[] args)
         {
             int ID = 1;
             string fileName = "database.txt";
-            List<Employee> employees = new List<Employee>();
+            List<string> employees = new List<string>();
             while(true)
             {
                 int i = 0;
-                Text("To add new employee type ADD, to delete type DEL, to change record type CHG, to read database type READ,\n to read record type REC and to exit type EXIT \n");
+                Text("To add new employee type ADD, to delete type DEL, to change record type CHG,\n to read record type REC and to exit type EXIT \n");
                 switch(UserChoice())
                 {
                     case "ADD":
@@ -114,13 +113,9 @@ namespace HomeWork_7
                             RecreateFile(fileName, employees);
                             continue;
                         }
-                    case "READ":
-                        {
-                            ReadArrayFromFile(fileName);
-                            continue;
-                        }
                     case "REC":
                         {
+                            ReadArrayFromFile(fileName);
                             ReadEmployee(employees, UserID());
                             continue;
                         }
