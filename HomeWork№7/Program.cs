@@ -70,7 +70,14 @@ namespace HomeWork_7
         }
         public static void ReadEmployee(List<string> employees, int ID)
         {
-            Console.WriteLine(employees[ID - 1]);
+            try
+            {
+                Text(employees[ID - 1]);
+            }
+            catch
+            {
+                Text("There is no record with ID like that\n");
+            }
         }
         public static string[] ReadArrayFromFile(string fileName)
         {
@@ -88,11 +95,11 @@ namespace HomeWork_7
             int ID = 1;
             string fileName = "database.txt";
             List<string> employees = new List<string>();
-            while(true)
+            while (true)
             {
                 int i = 0;
                 Text("To add new employee type ADD, to delete type DEL, to change record type CHG,\n to read record type REC and to exit type EXIT \n");
-                switch(UserChoice())
+                switch (UserChoice())
                 {
                     case "ADD":
                         {
@@ -126,7 +133,7 @@ namespace HomeWork_7
                             break;
                         }
                 }
-                if(i == 1)
+                if (i == 1)
                 {
                     break;
                 }
