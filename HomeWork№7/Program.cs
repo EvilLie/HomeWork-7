@@ -23,6 +23,7 @@ namespace HomeWork_7
         }
         public static Employee InitEmployee(int ID)
         {
+            int i = 0;
             Employee employee = new Employee();
             employee.ID = ID;
             employee.DateOfCreating = DateTime.Now;
@@ -33,7 +34,20 @@ namespace HomeWork_7
             Text("Please enter height of new employee: ");
             employee.Height = Convert.ToInt32($"{Console.ReadLine()}");
             Text("Enter date of birth: DD.MM.YYYY");
-            employee.DateOfBirth = Convert.ToDateTime(Console.ReadLine());
+            while (i == 0)
+            {
+                if (DateTime.TryParse(Console.ReadLine(), out DateTime dateOfBirth))
+                {
+                    employee.DateOfBirth = dateOfBirth;
+                    i++;
+                }
+                else
+                {
+                    Text("Wrong format of datetime, try again\n");
+                }
+
+            }
+
             Text("Enter place of birth");
             employee.PlaceOfBirth = $"{Console.ReadLine()}";
             return employee;
