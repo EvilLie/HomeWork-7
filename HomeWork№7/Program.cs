@@ -15,6 +15,20 @@ namespace HomeWork_7
             string userChoise = Console.ReadLine().Trim().ToUpper();
             return userChoise;
         }
+        public static int FindID(string[] employees)
+        {
+            if(employees.Length!=0)
+            {
+                int lastIndex = employees.Length;
+                int firstSplit = employees[lastIndex - 1].IndexOf("#", 0);
+                return Convert.ToInt32(employees[lastIndex - 1].Substring(0, firstSplit));
+            }
+            else
+            {
+                Text("Database is empty");
+                return new int();
+            }           
+        }
         public static int UserID()
         {
             Text("Enter ID of record you need");
@@ -23,14 +37,14 @@ namespace HomeWork_7
         }
         public static Employee InitEmployee(int ID)
         {
-            int i = 0,j=0,h=0;
+            int i = 0, j = 0, h = 0;
             Employee employee = new Employee();
             employee.ID = ID;
             employee.DateOfCreating = DateTime.Now;
             Text("Please enter full name of emloyee: ");
             employee.FullName = $"{Console.ReadLine()}";
             Text("Please enter age of new employee: ");
-            while(j==0)
+            while (j == 0)
             {
                 if (int.TryParse(Console.ReadLine(), out int age))
                 {
@@ -78,6 +92,14 @@ namespace HomeWork_7
             string s = $"{employee.ID}#{employee.DateOfCreating}#{employee.FullName}#{employee.Age}#{employee.Height}#{employee.DateOfBirth}#{employee.PlaceOfBirth}#";
             return s;
         }
+        public static List<string> FillArray(List<string> employees, string[] employeesStr)
+        {
+            foreach(string employee in employeesStr)
+            {
+                employees.Add(employee);
+            }
+            return employees;
+        }
         public static List<string> AddEmployee(List<string> employees, Employee employee)
         {
             employees.Add(ConvertEmployee(employee));
@@ -111,7 +133,7 @@ namespace HomeWork_7
             }
             catch
             {
-                Text("There is no record with ID like that\n");
+                Text("There is no record with ID like that");
             }
         }
         public static string[] ReadArrayFromFile(string fileName)
@@ -127,13 +149,15 @@ namespace HomeWork_7
         }
         static void Main(string[] args)
         {
-            int ID = 1;
+
             string fileName = "database.txt";
             List<string> employees = new List<string>();
+            FillArray(employees, ReadArrayFromFile(fileName));
+            int ID = FindID(ReadArrayFromFile(fileName)) + 1;
             while (true)
             {
                 int i = 0;
-                Text("To add new employee type ADD, to delete type DEL, to change record type CHG,\n to read record type REC and to exit type EXIT \n");
+                Text("To add new employee type ADD, to delete type DEL, to change record type CHG,\n to read record type REC and to exit type EXIT");
                 switch (UserChoice())
                 {
                     case "ADD":

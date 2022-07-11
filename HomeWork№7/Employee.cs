@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HomeWork_7
 {
@@ -15,7 +11,7 @@ namespace HomeWork_7
         /// <summary>
         /// Date when record was created
         /// </summary>
-        public DateTime DateOfCreating{ get; set; }
+        public DateTime DateOfCreating { get; set; }
         /// <summary>
         /// Full name of employee
         /// </summary>
